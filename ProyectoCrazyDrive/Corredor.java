@@ -14,5 +14,21 @@ public class Corredor extends Actor
     public void act() 
     {
         // Add your action code here.
+        if(Greenfoot.isKeyDown("Left"))
+      {
+        move(-3);
+      }
+       if(Greenfoot.isKeyDown("Right"))
+      {
+        move(3);
+      }
+       if(Greenfoot.isKeyDown("Up"))
+      {
+         setLocation(getX(),getY()-3);
+      }     
+      if(Greenfoot.isKeyDown("Down"))
+      {
+        setLocation(getX(),getY()+3);       
+      }    
     }    
 }
