@@ -11,7 +11,8 @@ public class CrazyDriveWorld extends World
     /*Atributos para la pantalla*/
     private static final int WIDTH = 560;
     private static final int HEIGHT = 850;
-    private int carril=55;
+    private int limiteIzquierdoPista=130;
+    private int limiteDerechoPista=322;
     
     /*Atributos del juego*/
     private JugadorPrincipal jugador;
@@ -54,4 +55,8 @@ public class CrazyDriveWorld extends World
     {
         contEstrellas.setValue(+1);
     }
+    
+    public int getLimitIzqPi(){ return limiteIzquierdoPista; }
+    
+    public int getLimitDerPi(){ return limiteDerechoPista; }
 }

@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class JugadorPrincipal extends Actor
 {
     private int velocidad=3;
-    private int giro;
+    private int cantGiro=4;
     
     public JugadorPrincipal(){
     }
@@ -30,18 +30,36 @@ public class JugadorPrincipal extends Actor
     
     public void avanza()
     {
+        setRotation(0);
+        setLocation(getX(),getY()-velocidad);
         if(Greenfoot.isKeyDown("Left"))
       {
-        move(-velocidad);
+          gira(-cantGiro);
+          checaLimites();
       }
+      
        if(Greenfoot.isKeyDown("Right"))
       {
-        move(velocidad);
-      }
-         setLocation(getX(),getY()-velocidad);     
-      if(Greenfoot.isKeyDown("Down"))
-      {
-        setLocation(getX(),getY()+3);       
-      } 
+          gira(cantGiro);
+          checaLimites();
+      }     
+    }
+    
+    public void gira(int sentido)
+    { 
+       setRotation(sentido);
+       setLocation(getX()+sentido,getY());
+    }
+    
+    public void checaLimites(){
+        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        
+        if(this.getX()<=mundo.getLimitIzqPi()){
+            gira(cantGiro);
+        }
+        
+        if(this.getX()>=mundo.getLimitDerPi()){
+            gira(-cantGiro);
+        }
     }
 }
