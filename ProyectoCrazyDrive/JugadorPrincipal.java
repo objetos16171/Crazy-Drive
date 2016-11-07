@@ -8,8 +8,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class JugadorPrincipal extends Actor
 {
-    private int velocidad=3;
+    private int velocidad=5;
     private int cantGiro=4;
+    
     
     public JugadorPrincipal(){
     }
@@ -18,19 +19,51 @@ public class JugadorPrincipal extends Actor
     {
         avanza();   
         checkIfTouchStar();
+        checkIfTouchGas();
+        checkInagujero();
+        
     }    
     
     public void checkIfTouchStar()
     {
-        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+       CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
         if(this.isTouching(Estrella.class)){
             mundo.eliminaEstrella();
         }
     }
     
-    public void avanza()
+     public void checkIfTouchGas()
     {
+              CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(this.isTouching(Gas.class)){
+          mundo.eliminaGas();
+        }
+    }
+    
+      public void checkInitrox()
+    {
+              CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(this.isTouching(Nitrox.class)){
+          mundo.eliminaNitrox();
+          velocidad+=5;
+        }
+       
+    }
+    
+       public void checkInagujero()
+    {
+         CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(this.isTouching(Agujero.class)){
+          mundo.eliminaAgujero();
+          setLocation(getX(),0);
+        }
+       
+    }
+    
+    public void avanza()
+    {        
         setRotation(0);
+        checkInitrox();        
         setLocation(getX(),getY()-velocidad);
         if(Greenfoot.isKeyDown("Left"))
       {
