@@ -23,7 +23,7 @@ public class CrazyDriveWorld extends World
     private Gas gas;
     private Nitrox nitrox;
     private Agujero agujero;
-    private int i=0;
+    private int i=0; //este atributo no debe pertenecer a la clase Ojo mari
     
 
     /**
@@ -32,15 +32,14 @@ public class CrazyDriveWorld extends World
      */
     public CrazyDriveWorld()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super( WIDTH, HEIGHT, 1); 
         prepare();
-        contTiempo.setValue(3);
+        //contTiempo.setValue(3);
 
      
     }
     
-    public void act()
+    /*public void act()
     { 
         if(reloj.millisElapsed() > 1000){
         contTiempo.add(-1);
@@ -53,7 +52,7 @@ public class CrazyDriveWorld extends World
        
        }
     
-    }
+    }*/
     
         /**
      * Prepare the world for the start of the program.
