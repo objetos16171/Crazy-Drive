@@ -13,7 +13,7 @@ public class JugadorPrincipal extends Actor
     
     
     public JugadorPrincipal(){
-    }
+      }
     
     public void act() 
     {

@@ -23,6 +23,7 @@ public class CrazyDriveWorld extends World
     private Gas gas;
     private Nitrox nitrox;
     private Agujero agujero;
+    private int i=0;
     
 
     /**
@@ -42,8 +43,14 @@ public class CrazyDriveWorld extends World
     public void act()
     { 
         if(reloj.millisElapsed() > 1000){
-        contTiempo.add(1);
+        contTiempo.add(-1);
         reloj.mark();
+        
+        if(contTiempo.getValue()==0)
+        {  
+         
+        }
+       
        }
     
     }
