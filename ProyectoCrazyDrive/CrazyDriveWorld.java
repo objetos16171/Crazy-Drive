@@ -25,7 +25,12 @@ public class CrazyDriveWorld extends World
     private static final int anchura=450;
     private Jugador principal;
     private Salida puntoSalida;
+    private Ready ready=new Ready();
+    private Go go=new Go();
     private Meta puntoMeta;
+    private SimpleTimer reloj=new SimpleTimer();
+    private Counter contTiempo=new Counter();
+
     
     /**
      * Este es el constructor de nuestra clase mundo 
@@ -41,7 +46,28 @@ public class CrazyDriveWorld extends World
         addObject(puntoSalida,220,620);
         puntoMeta=new Meta();
         addObject(puntoMeta,220,-3100);
+        contTiempo.setValue(3);
     }
+    
+        public int iniciaCarrera(){        
+      
+       if(reloj.millisElapsed()>1000){
+        contTiempo.add(-1);
+        reloj.mark();
+       }   
+       if(contTiempo.getValue()==2){
+         addObject(ready,250,altura-500);          
+       }
+        if(contTiempo.getValue()==1){
+          removeObject(ready);
+          addObject(go,250,altura-500);
+       }
+       if(contTiempo.getValue()<0){
+         removeObject(go);
+       }
+        return contTiempo.getValue();
+    }
+      
     
     /**
      * Asigna una orientacion en la imagen de fondo del mundo 
@@ -72,7 +98,7 @@ public class CrazyDriveWorld extends World
      * @param cy Recibe un nuevo valor de cy
      */
     public void setcY(int y){ cy=y; }
-}
+ }
 
 /*public class CrazyDriveWorld extends World
 {

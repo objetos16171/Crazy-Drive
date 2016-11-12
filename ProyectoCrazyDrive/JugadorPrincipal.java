@@ -24,11 +24,15 @@ public class JugadorPrincipal extends Jugador
      * Act - do whatever the JugadorPrincipal wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    
+     
     public void act() 
-    {
+    {  
+        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
         this.setImage(myImage.getCurrentImage());
-        this.avanza();
+       if(mundo.iniciaCarrera()<0){
+         this.avanza();
+        }
+   
     }    
     
     /**
@@ -36,6 +40,7 @@ public class JugadorPrincipal extends Jugador
      */
     public void avanza()
     {
+        
         if(puedoMoverme(2)){
             setRotation(0);
             setLocation(getX(),getY()-velocidad);
