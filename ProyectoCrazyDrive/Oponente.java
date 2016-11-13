@@ -18,8 +18,11 @@ public class Oponente extends Jugador
         myImage = new GifImage("Oponente1.gif");  //La imagen representa al jugador principal
     }
     
-    public void act() 
-    {
-        setLocation(getX(),getY()-2);
+    public void act(){ 
+     CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+     {   if(mundo.iniciaCarrera()<0){
+        setLocation(getX(),getY()-1);
+    }
     }    
+   }
 }

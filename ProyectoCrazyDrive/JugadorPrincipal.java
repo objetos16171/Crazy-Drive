@@ -32,6 +32,8 @@ public class JugadorPrincipal extends Jugador
        if(mundo.iniciaCarrera()<0){
          this.avanza();
         }
+        checkIfTouchArma();
+        
    
     }    
     
@@ -54,6 +56,14 @@ public class JugadorPrincipal extends Jugador
         if(Greenfoot.isKeyDown("Left")&&puedoMoverme(1)){
             gira(-cantGiro);
             setLocation(getX()-velocidad,getY());
+        }
+    }
+    
+     public void checkIfTouchArma()
+    {
+       CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(this.isTouching(Armas.class)){
+            mundo.eliminaArma();
         }
     }
     

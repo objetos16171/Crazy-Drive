@@ -24,12 +24,15 @@ public class CrazyDriveWorld extends World
     private static final int altura=700;
     private static final int anchura=450;
     private Jugador principal;
+    private Oponente oponente1;
     private Salida puntoSalida;
     private Ready ready=new Ready();
     private Go go=new Go();
     private Meta puntoMeta;
     private SimpleTimer reloj=new SimpleTimer();
     private Counter contTiempo=new Counter();
+    private Counter contArma=new Counter();
+    private Armas arma=new Armas();
 
     
     /**
@@ -42,13 +45,18 @@ public class CrazyDriveWorld extends World
         super(anchura, altura, 1,false);
         principal=new JugadorPrincipal();   //se crea un jugador de tipo principal    
         addObject(principal,270,400);       //se agrega el jugador principal en el mundo
+        addObject(arma,200,100);
         puntoSalida=new Salida();
         addObject(puntoSalida,220,620);
         puntoMeta=new Meta();
         addObject(puntoMeta,220,-3100);
         contTiempo.setValue(3);
+        
     }
-    
+    /**
+     * Metodo para el arranque del jugador
+     * @return contTiempo 
+     */
         public int iniciaCarrera(){        
       
        if(reloj.millisElapsed()>1000){
@@ -67,7 +75,11 @@ public class CrazyDriveWorld extends World
        }
         return contTiempo.getValue();
     }
-      
+    
+     public void eliminaArma(){ 
+         removeObject(arma);
+         contArma.setValue(+1);
+        }
     
     /**
      * Asigna una orientacion en la imagen de fondo del mundo 
