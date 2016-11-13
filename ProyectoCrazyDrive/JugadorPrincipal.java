@@ -27,8 +27,8 @@ public class JugadorPrincipal extends Jugador
     
     public void act() 
     {
-        this.setImage(myImage.getCurrentImage());
         this.avanza();
+        this.setImage(myImage.getCurrentImage());
     }    
     
     /**
@@ -40,11 +40,9 @@ public class JugadorPrincipal extends Jugador
             setRotation(0);
             setLocation(getX(),getY()-velocidad);
         }
-         if(Greenfoot.isKeyDown("Down")&&puedoMoverme(3)){
-            setLocation(getX(),getY()+velocidad);
-        }
         if(Greenfoot.isKeyDown("Right")&&puedoMoverme(0)){
             gira(cantGiro);
+            setLocation(getX()+velocidad,getY());
         }
         if(Greenfoot.isKeyDown("Left")&&puedoMoverme(1)){
             gira(-cantGiro);

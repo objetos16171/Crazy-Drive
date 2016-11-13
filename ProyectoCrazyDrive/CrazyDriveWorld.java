@@ -26,7 +26,8 @@ public class CrazyDriveWorld extends World
     private Jugador principal;
     private Salida puntoSalida;
     private Meta puntoMeta;
-    
+    private Jugador oponente;
+
     /**
      * Este es el constructor de nuestra clase mundo 
      * 
@@ -35,14 +36,9 @@ public class CrazyDriveWorld extends World
     {    
         // Se crea el mundo con sus valores en ancho y alto, con celdas de un pixel
         super(anchura, altura, 1,false);
-        principal=new JugadorPrincipal();   //se crea un jugador de tipo principal    
-        addObject(principal,270,400);       //se agrega el jugador principal en el mundo
-        puntoSalida=new Salida();
-        addObject(puntoSalida,220,620);
-        puntoMeta=new Meta();
-        addObject(puntoMeta,220,-3100);
+        prepare();
     }
-    
+
     /**
      * Asigna una orientacion en la imagen de fondo del mundo 
      */
@@ -52,26 +48,40 @@ public class CrazyDriveWorld extends World
         cy=cy+oY;
         getBackground().drawImage(pista,cx,cy);   //redibuja el fondo en las nuevas coordenadas recibidas por parametro
     }
-    
+
     /**
      * @return X
      */
     public int getcX(){ return cx; }
-    
+
     /**
      * @return Y
      */
     public int getcY(){ return cy; }
-    
+
     /**
      * @param cx Recibe un nuevo valor de cx
      */
     public void setcX(int x){ cx=x; }
-    
+
     /**
      * @param cy Recibe un nuevo valor de cy
      */
     public void setcY(int y){ cy=y; }
+
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
+        principal=new JugadorPrincipal();   //se crea un jugador de tipo principal    
+        addObject(principal,270,400);       //se agrega el jugador principal en el mundO
+        puntoSalida=new Salida();
+        addObject(puntoSalida,220,620);
+        puntoMeta=new Meta();
+        addObject(puntoMeta,230,-3100);
+    }
 }
 
 /*public class CrazyDriveWorld extends World

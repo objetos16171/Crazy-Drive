@@ -9,6 +9,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Oponente extends Jugador
 {  
     private GifImage myImage;
+    private int velocidad=9;
+    private int cantGiro;
     
     /**
      * 
@@ -20,6 +22,9 @@ public class Oponente extends Jugador
     
     public void act() 
     {
-        setLocation(getX(),getY()-2);
+      if(puedoMoverme(2)){
+            setRotation(0);
+            setLocation(getX(),getY()-velocidad);
+        }
     }    
 }
