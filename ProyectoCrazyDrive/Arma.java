@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Armas extends Other
+public class Arma extends Other
 {
     /**
      * Act - do whatever the Armas wants to do. This method is called whenever

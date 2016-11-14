@@ -32,7 +32,7 @@ public class CrazyDriveWorld extends World
     private SimpleTimer reloj=new SimpleTimer();
     private Counter contTiempo=new Counter();
     private Counter contArma=new Counter();
-    private Armas arma=new Armas();
+    private Arma arma=new Arma();
     private Bonificador gas;
     private Imagen imgGas;
 
@@ -76,10 +76,17 @@ public class CrazyDriveWorld extends World
         if(contTiempo.getValue()==1){
           removeObject(ready);
           addObject(go,250,altura-500);
+          
        }
-       if(contTiempo.getValue()<0){
+       if(contTiempo.getValue()==0){
          removeObject(go);
        }
+       if(contTiempo.getValue()==-5){
+         imgGas.cambiate(0);
+        }
+       if(contTiempo.getValue()==-8){
+         imgGas.cambiate(-1);
+        }
         return contTiempo.getValue();
         
     }
@@ -140,19 +147,6 @@ public class CrazyDriveWorld extends World
      * Este metodo disminuye la cantidad de gas disponible cada 3 segundos
      *Y si la cantidad de gas es cero, el juego se termina
      */
-    public void disminuyeGas()
-    {
-        if(reloj.millisElapsed()>3000)
-        {
-            contTiempo.add(-1);
-            reloj.mark();
-        }
-        if(contTiempo.getValue()>=1)
-        {
-            imgGas.cambiate(-1);
-        }
-    }
-    
     public void cambiaImagenGas(int i)
     {
         imgGas.cambiate(i);

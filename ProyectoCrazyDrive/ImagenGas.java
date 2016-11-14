@@ -16,7 +16,7 @@ public class ImagenGas extends Imagen
      */
     public ImagenGas()
     {
-       this.setImage("contGas2.png");
+       this.setImage("contGas3.png");
     }
     
     /**

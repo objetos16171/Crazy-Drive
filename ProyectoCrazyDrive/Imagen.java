@@ -20,4 +20,6 @@ public class Imagen extends Actor
     public void cambiate(int i)
     {
     }
+    
+   
 }

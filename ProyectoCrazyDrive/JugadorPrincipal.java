@@ -32,7 +32,8 @@ public class JugadorPrincipal extends Jugador
        if(mundo.iniciaCarrera()<0){
          this.avanza();
         }
-        checkIfTouchArma();
+        //mundo.disminuyeGas();
+        checkIfTouchArma();        
         checkIfTouchGas();
     }    
     
@@ -61,9 +62,12 @@ public class JugadorPrincipal extends Jugador
      public void checkIfTouchArma()
     {
        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(this.isTouching(Armas.class)){
+        if(this.isTouching(Arma.class)){
             mundo.eliminaArma();
+            
         }
+        
+
     }
     
     /**
