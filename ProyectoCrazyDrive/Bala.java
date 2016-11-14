@@ -16,7 +16,25 @@ public class Bala extends Arma
     {
         // Add your action code here.
            setLocation(getX(),getY()-15); //Hace que la bala se mueva hacia arriba
+           checkIfTouchArma();
+           checkIfTouchMancha();
+     }
+     
+     public void checkIfTouchArma()
+    {
+       CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(this.isTouching(ArbolCaido.class)){
+            mundo.eliminaArbol();
             
         }
+    }
+    
+    public void checkIfTouchMancha()
+    {
+       CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(this.isTouching(ManchadeAceite.class)){
+            mundo.eliminaMancha();
+        }
+    }
     }    
 

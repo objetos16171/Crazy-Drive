@@ -14,6 +14,7 @@ public class Arma extends Other
      */
     public void act() 
     {
-        // Add your action code here.
+        // Add your action code here.  
     }    
+   
 }

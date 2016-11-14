@@ -67,8 +67,6 @@ public class JugadorPrincipal extends Jugador
             mundo.eliminaArma();
             
         }
-        
-
     }
     
     /**

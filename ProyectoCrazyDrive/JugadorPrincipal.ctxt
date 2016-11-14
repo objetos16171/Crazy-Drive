@@ -20,5 +20,5 @@ comment6.target=void\ checkIfTouchGas()
 comment6.text=\r\n\ Este\ m\u00E9todo\ permite\ eliminar\ el\ objeto\ Gas\ del\ mundo\ una\ vez\ que\ el\r\n\ jugador\ lo\ toca.\r\n
 comment7.params=
 comment7.target=void\ Dispara()
-comment7.text=\r\n\ Este\ metodo\ es\ para\ que\ al\ precionar\ espacio\ para\ que\ el\ jugador\ principa\r\n\ \r\n
+comment7.text=\r\n\ Este\ metodo\ es\ para\ que\ al\ precionar\ espacio\ para\ que\ el\ jugador\ principa\r\n\ pueda\ disparar\ una\ bala\r\n
 numComments=8

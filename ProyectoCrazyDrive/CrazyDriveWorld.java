@@ -33,12 +33,13 @@ public class CrazyDriveWorld extends World
     private Counter contTiempo=new Counter();
     private Counter contArma=new Counter();
     private Arma arma=new Arma();
+    private Obstaculo arbol=new ArbolCaido();
+    private Obstaculo mancha=new ManchadeAceite();
     private Bonificador gas;
     private Imagen imgGas;
     private Arma Bala=new Bala();
-     private int i=0;
-    
-    
+    private int i=0;
+
     /**
      * Este es el constructor de nuestra clase mundo 
      * 
@@ -56,48 +57,59 @@ public class CrazyDriveWorld extends World
         addObject(puntoMeta,220,-3100);
         contTiempo.setValue(3);
         oponente1=new Oponente();
+        addObject(arbol,271,19);
+        addObject(mancha,271,-1000);
         addObject(oponente1,150,400);
         agregaGas();
         imgGas=new ImagenGas();
         addObject(imgGas,118,41);
+      
     }
-    
+
     /**
      * Metodo para el arranque del jugador
      * @return contTiempo 
      */
-        public int iniciaCarrera(){        
-      
-       if(reloj.millisElapsed()>1000){
-        contTiempo.add(-1);
-        reloj.mark();
-       }   
-       if(contTiempo.getValue()==2){
-         addObject(ready,250,altura-500);          
-       }
-        if(contTiempo.getValue()==1){
-          removeObject(ready);
-          addObject(go,250,altura-500);
-          
-       }
-       if(contTiempo.getValue()==0){
-         removeObject(go);
-       }
-       if(contTiempo.getValue()==-5){
-         imgGas.cambiate(0);
+    public int iniciaCarrera(){        
+
+        if(reloj.millisElapsed()>1000){
+            contTiempo.add(-1);
+            reloj.mark();
+        }   
+        if(contTiempo.getValue()==2){
+            addObject(ready,250,altura-500);          
         }
-       if(contTiempo.getValue()==-8){
-         imgGas.cambiate(-1);
+        if(contTiempo.getValue()==1){
+            removeObject(ready);
+            addObject(go,250,altura-500);
+
+        }
+        if(contTiempo.getValue()==0){
+            removeObject(go);
+        }
+        if(contTiempo.getValue()==-5){
+            imgGas.cambiate(0);
+        }
+        if(contTiempo.getValue()==-8){
+            imgGas.cambiate(-1);
         }
         return contTiempo.getValue();
-        
+
+    }
+
+    public void eliminaArma(){ 
+        removeObject(arma);
+        contArma.setValue(+1);
+    }
+
+    public void eliminaArbol(){ 
+        removeObject(arbol);
     }
     
-     public void eliminaArma(){ 
-         removeObject(arma);
-         contArma.setValue(+1);
-        }
-    
+    public void eliminaMancha(){ 
+        removeObject(mancha);
+    }
+
     /**
      * Asigna una orientacion en la imagen de fondo del mundo 
      */
@@ -107,21 +119,22 @@ public class CrazyDriveWorld extends World
         cy=cy+oY;
         getBackground().drawImage(pista,cx,cy);   //redibuja el fondo en las nuevas coordenadas recibidas por parametro
     }
-    
+
     /**
      * @return X
      */
     public int getcX(){ return cx; }
-    
+
     /**
      * @return Y
      */
     public int getcY(){ return cy; }
-    
+
     /**
      * @param cx Recibe un nuevo valor de cx
      */
     public void setcX(int x){ cx=x; } 
+
     /**
      * @param cy Recibe un nuevo valor de cy
      */
@@ -135,7 +148,7 @@ public class CrazyDriveWorld extends World
         gas=new Gas();
         addObject(gas,Greenfoot.getRandomNumber(400),-1700);   
     }
-    
+
     /**
      * Este método elimina el objeto gas creado anteriormente
      */
@@ -152,16 +165,17 @@ public class CrazyDriveWorld extends World
     {
         imgGas.cambiate(i);
     }
+
     /**
      * Este método crea una bala y hace que la bala avance
      */
-     public void DisparaBala()
+    public void DisparaBala()
     {
-       Bala.setLocation(principal.getX(),principal.getY()-100);
+        Bala.setLocation(principal.getX(),principal.getY()-100);
         addObject(Bala,principal.getX(),principal.getY()-100);
     }
-  
- }
+    
+}
     
    /* /**
     }}
