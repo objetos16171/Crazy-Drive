@@ -35,7 +35,9 @@ public class CrazyDriveWorld extends World
     private Arma arma=new Arma();
     private Bonificador gas;
     private Imagen imgGas;
-
+    private Arma Bala=new Bala();
+     private int i=0;
+    
     
     /**
      * Este es el constructor de nuestra clase mundo 
@@ -142,7 +144,6 @@ public class CrazyDriveWorld extends World
         removeObject(gas);
     }
 
-
     /**
      * Este metodo disminuye la cantidad de gas disponible cada 3 segundos
      *Y si la cantidad de gas es cero, el juego se termina
@@ -151,6 +152,15 @@ public class CrazyDriveWorld extends World
     {
         imgGas.cambiate(i);
     }
+    /**
+     * Este método crea una bala y hace que la bala avance
+     */
+     public void DisparaBala()
+    {
+       Bala.setLocation(principal.getX(),principal.getY()-100);
+        addObject(Bala,principal.getX(),principal.getY()-100);
+    }
+  
  }
     
    /* /**

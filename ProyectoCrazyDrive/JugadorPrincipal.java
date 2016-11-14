@@ -33,6 +33,7 @@ public class JugadorPrincipal extends Jugador
          this.avanza();
         }
         //mundo.disminuyeGas();
+        Dispara();
         checkIfTouchArma();        
         checkIfTouchGas();
     }    
@@ -91,6 +92,18 @@ public class JugadorPrincipal extends Jugador
           mundo.cambiaImagenGas(1);
         }
     }
+    /**
+     * Este metodo es para que al precionar espacio para que el jugador principa
+     * pueda disparar una bala
+     */
+    public void Dispara()
+    {
+        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(Greenfoot.isKeyDown("space")){
+            mundo.DisparaBala();  
+          }
+    }
+   
 }
 
 
