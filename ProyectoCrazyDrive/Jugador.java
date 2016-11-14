@@ -43,7 +43,7 @@ public class Jugador extends Actor
             int x=uno.getX();
             int y=uno.getY();
             int primero=uno.getRotation();
-            uno.setRotation(getRotation());
+            uno.setRotation(getRotation()-90);
             uno.move(-num);
             uno.setRotation(primero);
             ((CrazyDriveWorld)getWorld()).setOrientacion(uno.getX()-x,uno.getY()-y);
@@ -111,5 +111,13 @@ public class Jugador extends Actor
             return false;
     }
     
+    /**
+     * Act - do whatever the Jugador wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act() 
+    {
+        //
+    }    
 }
 

@@ -20,14 +20,21 @@ public class CrazyDriveWorld extends World
 {
     private int cx=-170;
     private int cy=-3300;
-    private GreenfootImage pista = (new GreenfootImage("Pista1.png"));  //La imagen es un atributo de la clase
+    private GreenfootImage pista =(new GreenfootImage("Pista1.png"));  //La imagen es un atributo de la clase
     private static final int altura=700;
     private static final int anchura=450;
     private Jugador principal;
+    private Oponente oponente1;
     private Salida puntoSalida;
+    private Ready ready=new Ready();
+    private Go go=new Go();
     private Meta puntoMeta;
-    private Jugador oponente;
+    private SimpleTimer reloj=new SimpleTimer();
+    private Counter contTiempo=new Counter();
+    private Counter contArma=new Counter();
+    private Armas arma=new Armas();
 
+    
     /**
      * Este es el constructor de nuestra clase mundo 
      * 
@@ -36,9 +43,46 @@ public class CrazyDriveWorld extends World
     {    
         // Se crea el mundo con sus valores en ancho y alto, con celdas de un pixel
         super(anchura, altura, 1,false);
-        prepare();
+        principal=new JugadorPrincipal();   //se crea un jugador de tipo principal    
+        addObject(principal,270,400);       //se agrega el jugador principal en el mundo
+        addObject(arma,200,100);
+        puntoSalida=new Salida();
+        addObject(puntoSalida,220,620);
+        puntoMeta=new Meta();
+        addObject(puntoMeta,220,-3100);
+        contTiempo.setValue(3);
+        oponente1=new Oponente();
+        addObject(oponente1,150,400);
+        
     }
-
+    /**
+     * Metodo para el arranque del jugador
+     * @return contTiempo 
+     */
+        public int iniciaCarrera(){        
+      
+       if(reloj.millisElapsed()>1000){
+        contTiempo.add(-1);
+        reloj.mark();
+       }   
+       if(contTiempo.getValue()==2){
+         addObject(ready,250,altura-500);          
+       }
+        if(contTiempo.getValue()==1){
+          removeObject(ready);
+          addObject(go,250,altura-500);
+       }
+       if(contTiempo.getValue()<0){
+         removeObject(go);
+       }
+        return contTiempo.getValue();
+    }
+    
+     public void eliminaArma(){ 
+         removeObject(arma);
+         contArma.setValue(+1);
+        }
+    
     /**
      * Asigna una orientacion en la imagen de fondo del mundo 
      */
@@ -48,41 +92,27 @@ public class CrazyDriveWorld extends World
         cy=cy+oY;
         getBackground().drawImage(pista,cx,cy);   //redibuja el fondo en las nuevas coordenadas recibidas por parametro
     }
-
+    
     /**
      * @return X
      */
     public int getcX(){ return cx; }
-
+    
     /**
      * @return Y
      */
     public int getcY(){ return cy; }
-
+    
     /**
      * @param cx Recibe un nuevo valor de cx
      */
     public void setcX(int x){ cx=x; }
-
+    
     /**
      * @param cy Recibe un nuevo valor de cy
      */
     public void setcY(int y){ cy=y; }
-
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
-    private void prepare()
-    {
-        principal=new JugadorPrincipal();   //se crea un jugador de tipo principal    
-        addObject(principal,270,400);       //se agrega el jugador principal en el mundO
-        puntoSalida=new Salida();
-        addObject(puntoSalida,220,620);
-        puntoMeta=new Meta();
-        addObject(puntoMeta,230,-3100);
-    }
-}
+ }
 
 /*public class CrazyDriveWorld extends World
 {

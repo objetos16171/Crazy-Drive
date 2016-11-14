@@ -24,11 +24,15 @@ public class JugadorPrincipal extends Jugador
      * Act - do whatever the JugadorPrincipal wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    
+     
     public void act() 
-    {
-        this.avanza();
+    {  
+        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
         this.setImage(myImage.getCurrentImage());
+       if(mundo.iniciaCarrera()<0){
+         this.avanza();
+        }
+        checkIfTouchArma();
     }    
     
     /**
@@ -40,6 +44,9 @@ public class JugadorPrincipal extends Jugador
             setRotation(0);
             setLocation(getX(),getY()-velocidad);
         }
+         if(Greenfoot.isKeyDown("Down")&&puedoMoverme(3)){
+            setLocation(getX(),getY()+velocidad);
+        }
         if(Greenfoot.isKeyDown("Right")&&puedoMoverme(0)){
             gira(cantGiro);
             setLocation(getX()+velocidad,getY());
@@ -47,6 +54,14 @@ public class JugadorPrincipal extends Jugador
         if(Greenfoot.isKeyDown("Left")&&puedoMoverme(1)){
             gira(-cantGiro);
             setLocation(getX()-velocidad,getY());
+        }
+    }
+    
+     public void checkIfTouchArma()
+    {
+       CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(this.isTouching(Armas.class)){
+            mundo.eliminaArma();
         }
     }
     
