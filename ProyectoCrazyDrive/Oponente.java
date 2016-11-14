@@ -22,6 +22,7 @@ public class Oponente extends Jugador
     
     public void act(){ 
      CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+     this.setImage(myImage.getCurrentImage());
        if(mundo.iniciaCarrera()<0){
            avanza();
     }    

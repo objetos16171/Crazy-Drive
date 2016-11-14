@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=ImagenGas
+comment0.text=\r\n\ Esta\ clase\ nos\ permite\ cargar\ las\ distintas\ imagenes\ del\ gas\ disponible\r\n\ durante\ la\ carrera\r\n\ \r\n\ @author\ NAVA\ TORRES\ CLAUDIO\ ISAURO\ \r\n\ @version\ 13/11/2016\r\n
+comment1.params=
+comment1.target=ImagenGas()
+comment1.text=\r\n\ Constructor\ de\ la\ clase\ ImagenGas\r\n
+comment2.params=cant
+comment2.target=void\ cambiate(int)
+comment2.text=\r\n\ Este\ m\u00E9todo\ permite\ cambiar\ el\ tipo\ de\ imagen\r\n
+numComments=3

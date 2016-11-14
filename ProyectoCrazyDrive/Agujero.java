@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Agujero extends Bonificadores
+public class Agujero extends Bonificador
 {
     /**
      * Act - do whatever the Agujero wants to do. This method is called whenever

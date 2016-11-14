@@ -33,6 +33,7 @@ public class JugadorPrincipal extends Jugador
          this.avanza();
         }
         checkIfTouchArma();
+        checkIfTouchGas();
     }    
     
     /**
@@ -66,12 +67,25 @@ public class JugadorPrincipal extends Jugador
     }
     
     /**
-     * 
+     * Permite girar en sentido izquiero o derecho
      */
     public void gira(int sentido)
     {
        setRotation(sentido);
        setLocation(getX()+sentido,getY());
+    }
+    
+    /**
+     * Este método permite eliminar el objeto Gas del mundo una vez que el
+     * jugador lo toca.
+     */
+    public void checkIfTouchGas()
+    {
+        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(this.isTouching(Gas.class)){
+          mundo.eliminaGas();
+          mundo.cambiaImagenGas(1);
+        }
     }
 }
 
@@ -113,14 +127,7 @@ public class JugadorPrincipal extends Jugador
             mundo.eliminaEstrella();
         }
     }
-    
-     public void checkIfTouchGas()
-    {
-              CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(this.isTouching(Gas.class)){
-          mundo.eliminaGas();
-        }
-    }
+   
     
       public void checkInitrox()
     {

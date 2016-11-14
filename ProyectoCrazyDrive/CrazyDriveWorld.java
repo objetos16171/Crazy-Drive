@@ -33,6 +33,8 @@ public class CrazyDriveWorld extends World
     private Counter contTiempo=new Counter();
     private Counter contArma=new Counter();
     private Armas arma=new Armas();
+    private Bonificador gas;
+    private Imagen imgGas;
 
     
     /**
@@ -53,8 +55,11 @@ public class CrazyDriveWorld extends World
         contTiempo.setValue(3);
         oponente1=new Oponente();
         addObject(oponente1,150,400);
-        
+        agregaGas();
+        imgGas=new ImagenGas();
+        addObject(imgGas,118,41);
     }
+    
     /**
      * Metodo para el arranque del jugador
      * @return contTiempo 
@@ -76,6 +81,7 @@ public class CrazyDriveWorld extends World
          removeObject(go);
        }
         return contTiempo.getValue();
+        
     }
     
      public void eliminaArma(){ 
@@ -106,12 +112,122 @@ public class CrazyDriveWorld extends World
     /**
      * @param cx Recibe un nuevo valor de cx
      */
-    public void setcX(int x){ cx=x; }
-    
+    public void setcX(int x){ cx=x; } 
     /**
      * @param cy Recibe un nuevo valor de cy
      */
     public void setcY(int y){ cy=y; }
+
+    /**
+     * Método para agregar el objeto gas en una posición en X aleatoriamente
+     */
+    public void agregaGas()
+    {
+        gas=new Gas();
+        addObject(gas,Greenfoot.getRandomNumber(400),-1700);   
+    }
+    
+    /**
+     * Este método elimina el objeto gas creado anteriormente
+     */
+    public void eliminaGas()
+    {  
+        removeObject(gas);
+    }
+
+
+    /**
+     * Este metodo disminuye la cantidad de gas disponible cada 3 segundos
+     *Y si la cantidad de gas es cero, el juego se termina
+     */
+    public void disminuyeGas()
+    {
+        if(reloj.millisElapsed()>3000)
+        {
+            contTiempo.add(-1);
+            reloj.mark();
+        }
+        if(contTiempo.getValue()>=1)
+        {
+            imgGas.cambiate(-1);
+        }
+    }
+    
+    public void cambiaImagenGas(int i)
+    {
+        imgGas.cambiate(i);
+    }
+ }
+    
+   /* /**
+    }}
+  
+    /*
+    /**
+     * Metodo para el arranque del jugador
+     * @return contTiempo 
+     */
+ /*       public int iniciaCarrera(){        
+      
+       if(reloj.millisElapsed()>1000){
+        contTiempo.add(-1);
+        reloj.mark();
+       }   
+       if(contTiempo.getValue()==2){
+         addObject(ready,250,altura-500);          
+       }
+        if(contTiempo.getValue()==1){
+          removeObject(ready);
+          addObject(go,250,altura-500);
+       }
+       if(contTiempo.getValue()<0){
+         removeObject(go);
+       }
+        return contTiempo.getValue();
+    }
+    
+     public void eliminaArma(){ 
+         removeObject(arma);
+         contArma.setValue(+1);
+        }
+    
+    /**
+     * Asigna una orientacion en la imagen de fondo del mundo 
+     */
+ /*   public void setOrientacion(int oX, int oY)
+    {
+        cx=cx+oX;
+        cy=cy+oY;
+        getBackground().drawImage(pista,cx,cy);   //redibuja el fondo en las nuevas coordenadas recibidas por parametro
+    }
+    
+    /**
+     * @return X
+     */
+ /*   public int getcX(){ return cx; }
+    
+    /**
+     * @return Y
+     */
+ /*   public int getcY(){ return cy; }
+    
+    /**
+     * @param cx Recibe un nuevo valor de cx
+     */
+  /*  public void setcX(int x){ cx=x; }
+    
+    /**
+     * @param cy Recibe un nuevo valor de cy
+     */
+  /*  public void setcY(int y){ cy=y; }
+    
+    /**
+     * Este metodo nos permite eliminar el objeto gas colocado en la pantalla
+     */
+  /*  public void eliminaGas()
+    {  
+        removeObject(gas);
+    }
  }
 
 /*public class CrazyDriveWorld extends World
@@ -148,20 +264,6 @@ public class CrazyDriveWorld extends World
      
     }
     
-    /*public void act()
-    { 
-        if(reloj.millisElapsed() > 1000){
-        contTiempo.add(-1);
-        reloj.mark();
-        
-        if(contTiempo.getValue()==0)
-        {  
-         
-        }
-       
-       }
-    
-    }*/
     
    /*     /**
      * Prepare the world for the start of the program.
@@ -194,11 +296,6 @@ public class CrazyDriveWorld extends World
     {
         removeObject(estrella);
         incrementaContEstrellas();
-    }
-    
-    public void eliminaGas()
-    {  
-        removeObject(gas);
     }
     
     public void eliminaNitrox()
