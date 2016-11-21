@@ -1,22 +1,25 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Competidor here.
+ * Write a description of class Boton here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Competidor extends Actor
+public class Boton extends Actor
 {
+    public Boton(GreenfootImage boton)
+    {
+        super();
+        this.setImage(boton);
+    }
+    
     /**
-     * Act - do whatever the Competidor wants to do. This method is called whenever
+     * Act - do whatever the Boton wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
         // Add your action code here.
     }    
-    public void avanza()
-    {
-    }
 }

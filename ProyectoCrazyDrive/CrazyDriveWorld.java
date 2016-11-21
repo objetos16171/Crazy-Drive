@@ -6,6 +6,8 @@ import greenfoot.Actor;
 import greenfoot.GreenfootImage;
 import java.util.Calendar;
 import java.awt.Color;
+import java.lang.Class;
+import java.util.LinkedList;
 
 /**
  * Esta es la clase mundo de nuestro juego (proyecto de la materia de programación orientada a objetos)
@@ -21,8 +23,8 @@ public class CrazyDriveWorld extends World
     private int cx=-170;
     private int cy=-3300;
     private GreenfootImage pista =(new GreenfootImage("Pista1.png"));  //La imagen es un atributo de la clase
-    private static final int altura=700;
-    private static final int anchura=450;
+    private static final int altura=500;
+    private static final int anchura=600;
     private ScrollActor principal;
     private Oponente oponente1;
     private Salida puntoSalida;
@@ -38,7 +40,15 @@ public class CrazyDriveWorld extends World
     private Bonificador gas;
     private Imagen imgGas;
     private Arma Bala=new Bala();
-
+    private LinkedList <GreenfootImage> botones;
+     private Boton Jugar,Ayuda,Salir;
+    
+     
+     public void act()
+     { 
+         seleccionar();
+      }
+      
     /**
      * Este es el constructor de nuestra clase mundo 
      * 
@@ -47,22 +57,35 @@ public class CrazyDriveWorld extends World
     {    
         // Se crea el mundo con sus valores en ancho y alto, con celdas de un pixel
         super(anchura, altura, 1,false);
-        principal=new JugadorPrincipal();   //se crea un jugador de tipo principal    
-        addObject(principal,270,400);       //se agrega el jugador principal en el mundo
-        addObject(arma,200,100);
-        puntoSalida=new Salida();
-        addObject(puntoSalida,220,620);
-        puntoMeta=new Meta();
-        addObject(puntoMeta,220,-3100);
-        contTiempo.setValue(3);
-        oponente1=new Oponente();
-        addObject(arbol,271,19);
-        addObject(mancha,271,-1000);
-        addObject(oponente1,150,400);
-        agregaGas();
-        imgGas=new ImagenGas();
-        addObject(imgGas,118,41);
+        
+        botones= new LinkedList();
+        botones.add(new GreenfootImage("crazyDrive.png"));
+        botones.add(new GreenfootImage("Ayuda.png"));
+        botones.add(new GreenfootImage("Jugar.png"));
+        botones.add(new GreenfootImage("Salir.png"));
+        botones.add(new GreenfootImage("Pista1.png"));
+        
+        Jugar= new Boton(getBotones(2));
+        Ayuda= new Boton(getBotones(1));
+        Salir= new Boton(getBotones(3));
+        
+        menu();
       
+    }
+    
+    public void menu()
+    {
+
+        setBackground(getBotones(0));
+        addObject(Jugar, 220, 470);
+        //addObject(Salir, 400, 100);
+        addObject(Ayuda, 70, 430);  
+        Greenfoot.setSpeed(47);
+    }
+    
+    public GreenfootImage getBotones(int n)
+    {
+        return botones.get(n);
     }
 
     /**
@@ -76,18 +99,18 @@ public class CrazyDriveWorld extends World
             reloj.mark();
         }   
         if(contTiempo.getValue()==2){
-            addObject(ready,250,altura-500);          
+            addObject(ready,250,altura-400);          
         }
         if(contTiempo.getValue()==1){
             removeObject(ready);
-            addObject(go,250,altura-500);
+            addObject(go,250,altura-400);
 
         }
         if(contTiempo.getValue()==0){
             removeObject(go);
         }
         if(contTiempo.getValue()==-5){
-            imgGas.cambiate(2);
+            imgGas.cambiate(0);
         }
         
         return contTiempo.getValue();
@@ -175,6 +198,51 @@ public class CrazyDriveWorld extends World
     {
             Label etiqueta=new Label("Winner",120);
             addObject(etiqueta,principal.getX()+40,principal.getY()+50);
+    }
+    public void seleccionar()
+    {
+        
+        if(Greenfoot.mouseClicked(Salir)) {
+            removeObjects(getObjects(null));
+            menu();
+        }
+        
+        if(Greenfoot.mouseClicked(Jugar)) {
+            removeObjects(getObjects(null));            
+             Nivel1();
+             
+        }
+        
+         if(Greenfoot.mouseClicked(Ayuda)) {
+            removeObjects(getObjects(null));
+   
+        }
+    }
+    
+    public void Nivel1()
+    {
+        setBackground(getBotones(4));
+        principal=new JugadorPrincipal();   //se crea un jugador de tipo principal    
+        addObject(principal,270,400);       //se agrega el jugador principal en el mundo
+        oponente1=new Oponente();
+        addObject(oponente1,150,400);
+        Escenario();
+       
+    }
+    
+    private void Escenario()
+    {
+        addObject(arma,200,100);
+        puntoSalida=new Salida();
+        addObject(puntoSalida,220,620);
+        puntoMeta=new Meta();
+        addObject(puntoMeta,220,-3100);
+        contTiempo.setValue(3);
+        addObject(arbol,271,19);
+        addObject(mancha,271,-1000);
+        agregaGas();
+        imgGas=new ImagenGas();
+        addObject(imgGas,118,41);
     }
 }
     
