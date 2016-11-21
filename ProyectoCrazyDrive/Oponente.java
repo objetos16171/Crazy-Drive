@@ -6,10 +6,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Oponente extends Jugador
+public class Oponente extends Competidor
 {  
     private GifImage myImage;
-    private int velocidad=4;
+    private int velocidad=1;
     private int cantGiro=6;
     
     /**
@@ -31,15 +31,18 @@ public class Oponente extends Jugador
    public void avanza()
    {
      CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-     if(puedoMoverme(2)){  
-      setRotation(0);
-      setLocation(getX(),getY()-velocidad);
-     }
-     
+       
+       setRotation(0);
+       setLocation(getX(),getY()-velocidad);
      if(mundo.getcX()>-90)
      {
          gira(cantGiro);
          setLocation(getX()+velocidad,getY());
+     }
+     if(mundo.getcX()<-200)
+     {
+         gira(-cantGiro);
+         setLocation(getX()-velocidad,getY());
      }
    }
    
@@ -47,5 +50,15 @@ public class Oponente extends Jugador
     {
        setRotation(sentido);
        setLocation(getX()+sentido,getY());
+    }
+    
+    public void aumentaVelocidad(int cant)
+    {
+        velocidad+=cant;
+    }
+    
+    public void disminuyeVelocidad(int cant)
+    {
+        velocidad-=cant;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
  * @author Nava Torres Claudio Isauro, Bustos Hernandez Maricruz 
  * @version 10/11/2016
  */
-public class Jugador extends Actor
+public class ScrollActor extends Competidor
 {
     private final int RIGHT=0;
     private final int LEFT=1;
@@ -27,7 +27,6 @@ public class Jugador extends Actor
             Actor uno= todos.get(i);
             uno.setLocation(uno.getX()+x2,uno.getY()+y2);   //Le damos la posicion de los otros
         }
-        
         ((CrazyDriveWorld) getWorld()).setOrientacion(x2,y2);    //para retroceder el mundo
     }
     
@@ -87,7 +86,7 @@ public class Jugador extends Actor
         }
         else if(direction == DOWN)
         {
-            if(y > -3300)
+            if(y > -3400)
                 return true;
             else
                 return false;
@@ -117,7 +116,7 @@ public class Jugador extends Actor
      */
     public void act() 
     {
-        //
+        
     }    
 }
 

@@ -1,5 +1,5 @@
 #BlueJ class context
-comment0.target=Jugador
+comment0.target=ScrollActor
 comment0.text=\r\n\ Esta\ es\ la\ clase\ padre\ de\ los\ jugadores\ del\ juego\r\n\ \r\n\ @author\ Nava\ Torres\ Claudio\ Isauro,\ Bustos\ Hernandez\ Maricruz\ \r\n\ @version\ 10/11/2016\r\n
 comment1.params=x\ y
 comment1.target=void\ setLocation(int,\ int)

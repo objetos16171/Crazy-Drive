@@ -23,7 +23,7 @@ public class CrazyDriveWorld extends World
     private GreenfootImage pista =(new GreenfootImage("Pista1.png"));  //La imagen es un atributo de la clase
     private static final int altura=700;
     private static final int anchura=450;
-    private Jugador principal;
+    private ScrollActor principal;
     private Oponente oponente1;
     private Salida puntoSalida;
     private Ready ready=new Ready();
@@ -38,7 +38,6 @@ public class CrazyDriveWorld extends World
     private Bonificador gas;
     private Imagen imgGas;
     private Arma Bala=new Bala();
-    private int i=0;
 
     /**
      * Este es el constructor de nuestra clase mundo 
@@ -88,13 +87,10 @@ public class CrazyDriveWorld extends World
             removeObject(go);
         }
         if(contTiempo.getValue()==-5){
-            imgGas.cambiate(0);
+            imgGas.cambiate(2);
         }
-        if(contTiempo.getValue()==-8){
-            imgGas.cambiate(-1);
-        }
+        
         return contTiempo.getValue();
-
     }
 
     public void eliminaArma(){ 
@@ -175,6 +171,11 @@ public class CrazyDriveWorld extends World
         addObject(Bala,principal.getX(),principal.getY()-100);
     }
     
+    public void ganador()
+    {
+            Label etiqueta=new Label("Winner",120);
+            addObject(etiqueta,principal.getX()+40,principal.getY()+50);
+    }
 }
     
    /* /**

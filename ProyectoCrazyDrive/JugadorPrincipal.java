@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class JugadorPrincipal extends Jugador
+public class JugadorPrincipal extends ScrollActor
 {
     private int velocidad=7;
     private int cantGiro=4;
@@ -32,10 +32,10 @@ public class JugadorPrincipal extends Jugador
        if(mundo.iniciaCarrera()<0){
          this.avanza();
         }
-        //mundo.disminuyeGas();
         Dispara();
         checkIfTouchArma();        
         checkIfTouchGas();
+        checkIfWon();
     }    
     
     /**
@@ -43,6 +43,8 @@ public class JugadorPrincipal extends Jugador
      */
     public void avanza()
     {
+        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        
         if(puedoMoverme(2)){
             setRotation(0);
             setLocation(getX(),getY()-velocidad);
@@ -65,7 +67,6 @@ public class JugadorPrincipal extends Jugador
        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
         if(this.isTouching(Arma.class)){
             mundo.eliminaArma();
-            
         }
     }
     
@@ -101,7 +102,15 @@ public class JugadorPrincipal extends Jugador
             mundo.DisparaBala();  
           }
     }
-   
+    
+    public void checkIfWon()
+    {
+        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
+        if(isTouching(Meta.class))
+        {
+            mundo.ganador();
+        }
+    }
 }
 
 
