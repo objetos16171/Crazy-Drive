@@ -26,7 +26,7 @@ public class CrazyDriveWorld extends World
     private static final int altura=500;
     private static final int anchura=600;
     private ScrollActor principal;
-    private Oponente oponente1;
+    private Competidor oponente1;
     private Salida puntoSalida;
     private Ready ready=new Ready();
     private Go go=new Go();
@@ -39,7 +39,8 @@ public class CrazyDriveWorld extends World
     private Obstaculo mancha=new ManchadeAceite();
     private Bonificador gas;
     private Imagen imgGas;
-    private Arma Bala=new Bala();
+    private Arma Bala=new BalaPrincipal();
+    private SimpleTimer tiempoBalaE=new SimpleTimer(); 
     private LinkedList <GreenfootImage> botones;
      private Boton Jugar,Ayuda,Salir;
     
@@ -47,8 +48,9 @@ public class CrazyDriveWorld extends World
      public void act()
      { 
          seleccionar();
+         
       }
-      
+   
     /**
      * Este es el constructor de nuestra clase mundo 
      * 
@@ -72,7 +74,9 @@ public class CrazyDriveWorld extends World
         menu();
       
     }
-    
+    /**
+     * Este es el menú del juego
+     */
     public void menu()
     {
 
@@ -93,10 +97,13 @@ public class CrazyDriveWorld extends World
      * @return contTiempo 
      */
     public int iniciaCarrera(){        
-
+        
+        
+               
         if(reloj.millisElapsed()>1000){
             contTiempo.add(-1);
             reloj.mark();
+           
         }   
         if(contTiempo.getValue()==2){
             addObject(ready,250,altura-400);          
@@ -109,10 +116,11 @@ public class CrazyDriveWorld extends World
         if(contTiempo.getValue()==0){
             removeObject(go);
         }
+        
         if(contTiempo.getValue()==-5){
             imgGas.cambiate(0);
         }
-        
+                
         return contTiempo.getValue();
     }
 
@@ -194,11 +202,28 @@ public class CrazyDriveWorld extends World
         addObject(Bala,principal.getX(),principal.getY()-100);
     }
     
+    /**
+     * Este método crea una bala enemigo cada 6 segundos y se lanza
+     */
+    public void DisparaBalaEnemigo()
+    {  
+              if(tiempoBalaE.millisElapsed()> 6000)
+               {
+                   Arma balaO= new balaOponente();
+                   addObject(balaO,oponente1.getX(),oponente1.getY());
+                   tiempoBalaE.mark();
+               }
+    }
+            
     public void ganador()
     {
             Label etiqueta=new Label("Winner",120);
             addObject(etiqueta,principal.getX()+40,principal.getY()+50);
     }
+    
+    /**
+     * Este es un método de seleccion del menú para jugar o pedir ayuda
+     */
     public void seleccionar()
     {
         
@@ -218,7 +243,9 @@ public class CrazyDriveWorld extends World
    
         }
     }
-    
+    /**
+     * Este es un método donde se crea todo nuestro escenario
+     */
     public void Nivel1()
     {
         setBackground(getBotones(4));
@@ -226,12 +253,6 @@ public class CrazyDriveWorld extends World
         addObject(principal,270,400);       //se agrega el jugador principal en el mundo
         oponente1=new Oponente();
         addObject(oponente1,150,400);
-        Escenario();
-       
-    }
-    
-    private void Escenario()
-    {
         addObject(arma,200,100);
         puntoSalida=new Salida();
         addObject(puntoSalida,220,620);

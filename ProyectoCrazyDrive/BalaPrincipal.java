@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Bala extends Arma
+public class BalaPrincipal extends Arma
 {
     /**
      * Act - do whatever the Bala wants to do. This method is called whenever

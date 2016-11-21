@@ -24,6 +24,7 @@ public class Oponente extends Competidor
      CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
      this.setImage(myImage.getCurrentImage());
        if(mundo.iniciaCarrera()<0){
+           mundo.DisparaBalaEnemigo();
            avanza();
     }    
    }
