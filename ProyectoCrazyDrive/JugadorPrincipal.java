@@ -6,68 +6,54 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class JugadorPrincipal extends ScrollActor
+public class JugadorPrincipal extends Competidor
 {
-    private int velocidad=7;
-    private int cantGiro=4;
+    private int velocidad=3;
+    private int cantGiro=2;
     private GifImage myImage;
     
     /**
-     * Este es el constructor de la clase JugadorPrincipal
+     * Este es el constructor del Jugador Principal
      */
     public JugadorPrincipal()
     {
-        myImage = new GifImage("carJugPrin.gif");  //La imagen representa al jugador principal
+      myImage = new GifImage("JugaPrincipal.gif");  //La imagen representa al jugador principal
     }
     
     /**
      * Act - do whatever the JugadorPrincipal wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-     
     public void act() 
-    {  
+    {
         CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
         this.setImage(myImage.getCurrentImage());
-       if(mundo.iniciaCarrera()<0){
+        if(mundo.iniciaCarrera()<0){
          this.avanza();
         }
-        Dispara();
-        checkIfTouchArma();        
-        checkIfTouchGas();
-        checkIfWon();
     }    
     
     /**
-     * 
+     * Este método permite que el jugador principal avance
      */
     public void avanza()
     {
-        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        
-        if(puedoMoverme(2)){
-            setRotation(0);
-            setLocation(getX(),getY()-velocidad);
-        }
-         if(Greenfoot.isKeyDown("Down")&&puedoMoverme(3)){
-            setLocation(getX(),getY()+velocidad);
-        }
-        if(Greenfoot.isKeyDown("Right")&&puedoMoverme(0)){
+        CrazyDriveWorld mundo =(CrazyDriveWorld)getWorld();
+        mundo.setScrollSpeed(velocidad);
+        if(Greenfoot.isKeyDown("Right")&& this.getX()<mundo.getPistaLimitDerecho()){
             gira(cantGiro);
             setLocation(getX()+velocidad,getY());
         }
-        if(Greenfoot.isKeyDown("Left")&&puedoMoverme(1)){
+        if(Greenfoot.isKeyDown("Left")&& this.getX()>mundo.getPistaLimitIzquierdo()){
             gira(-cantGiro);
             setLocation(getX()-velocidad,getY());
         }
-    }
-    
-     public void checkIfTouchArma()
-    {
-       CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(this.isTouching(Arma.class)){
-            mundo.eliminaArma();
-        }
+        if(Greenfoot.isKeyDown("space")){
+            mundo.disparaBala();  
+          }
+        
+        mundo.cuentaNumVueltas();
+        mundo.ganador();
     }
     
     /**
@@ -80,132 +66,65 @@ public class JugadorPrincipal extends ScrollActor
     }
     
     /**
-     * Este método permite eliminar el objeto Gas del mundo una vez que el
-     * jugador lo toca.
+     * Checa si el jugador principal toco una estrella
      */
-    public void checkIfTouchGas()
+    public int checkIfTouchEstrella()
     {
-        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(this.isTouching(Gas.class)){
-          mundo.eliminaGas();
-          mundo.cambiaImagenGas(1);
-        }
-    }
-    /**
-     * Este metodo es para que al precionar espacio para que el jugador principa
-     * pueda disparar una bala
-     */
-    public void Dispara()
-    {
-        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(Greenfoot.isKeyDown("space")){
-            mundo.DisparaBala();  
-          }
-    }
-    
-    public void checkIfWon()
-    {
-        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(isTouching(Meta.class))
+        
+        if(this.isTouching(Estrella.class))
         {
-            mundo.ganador();
+          return 1; 
+        }
+        else
+        {
+          return 0;
+        }
+        
+    }
+    
+    /**
+     * Checa si el jugador toca algun obstaculo
+     */
+    public int checkIfTouchObstaculo()
+    {
+        if(this.isTouching(Obstaculo.class))
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
         }
     }
+    
+    /**
+     * Regresa 1 si el jugador principal choca con el oponente
+     */
+    public int checaSiChoco()
+    {
+        if(this.isTouching(Oponente.class))
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
+    /**
+     * Comprueba si la bala lo ha tocado
+     */
+    public int checkIfTouchBala()
+    {
+        if(this.isTouching(BalaOponente.class))
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
 }
-
-
-
-
-
-
-/*import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
-/**
- * Write a description of class Corredor here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-/*public class JugadorPrincipal extends Jugador
-{
-    private int velocidad=5;
-    private int cantGiro=4;
-    
-    /*
-    public JugadorPrincipal(){
-      }
-    
-    public void act() 
-    {
-        avanza();   
-        checkIfTouchStar();
-        checkIfTouchGas();
-        checkInagujero();
-        
-    }    
-    
-    public void checkIfTouchStar()
-    {
-       CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(this.isTouching(Estrella.class)){
-            mundo.eliminaEstrella();
-        }
-    }
-   
-    
-      public void checkInitrox()
-    {
-              CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(this.isTouching(Nitrox.class)){
-          mundo.eliminaNitrox();
-          velocidad+=5;
-        }
-       
-    }
-    
-       public void checkInagujero()
-    {
-         CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        if(this.isTouching(Agujero.class)){
-          mundo.eliminaAgujero();
-          setLocation(getX(),0);
-        }
-       
-    }
-    
-    public void avanza()
-    {        
-        setRotation(0);
-        checkInitrox();        
-        setLocation(getX(),getY()-velocidad);
-        if(Greenfoot.isKeyDown("Left"))
-      {
-          gira(-cantGiro);
-          checaLimites();
-      }
-      
-       if(Greenfoot.isKeyDown("Right"))
-      {
-          gira(cantGiro);
-          checaLimites();
-      }     
-    }
-    
-    public void gira(int sentido)
-    { 
-       setRotation(sentido);
-       setLocation(getX()+sentido,getY());
-    }
-    
-    public void checaLimites(){
-        CrazyDriveWorld mundo=(CrazyDriveWorld)getWorld();
-        
-        if(this.getX()<=mundo.getLimitIzqPi()){
-            gira(cantGiro);
-        }
-        
-        if(this.getX()>=mundo.getLimitDerPi()){
-            gira(-cantGiro);
-        }
-    }*/
-

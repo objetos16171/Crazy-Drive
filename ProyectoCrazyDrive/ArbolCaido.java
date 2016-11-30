@@ -15,7 +15,5 @@ public class ArbolCaido extends Obstaculo
     public void act() 
     {
         // Add your action code here.
-        
-    }   
-
+    }    
 }

@@ -1,15 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class ManchadeAceite here.
+ * Write a description of class ManchaDeAceite here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ManchadeAceite extends Obstaculo
+public class ManchaDeAceite extends Obstaculo
 {
     /**
-     * Act - do whatever the ManchadeAceite wants to do. This method is called whenever
+     * Act - do whatever the ManchaDeAceite wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 

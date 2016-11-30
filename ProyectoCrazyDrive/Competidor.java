@@ -16,7 +16,28 @@ public class Competidor extends Actor
     {
         // Add your action code here.
     }    
-    public void avanza()
+    
+    public int checkIfTouchEstrella()
     {
+        return 0;
+    }
+    
+    public int checkIfTouchObstaculo()
+    {
+        return 0;
+    }
+    
+    public void cambiaVelocidad(int cant)
+    {   
+    }
+    
+    public int checaSiChoco()
+    {
+        return 0;
+    }
+    
+    public int checkIfTouchBala()
+    {
+        return 0;
     }
 }

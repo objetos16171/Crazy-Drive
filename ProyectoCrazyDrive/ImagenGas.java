@@ -1,11 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Esta clase nos permite cargar las distintas imagenes del gas disponible
- * durante la carrera
+ * Write a description of class ImagenGas here.
  * 
- * @author NAVA TORRES CLAUDIO ISAURO 
- * @version 13/11/2016
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class ImagenGas extends Imagen
 {
@@ -45,4 +44,9 @@ public class ImagenGas extends Imagen
             tipo=0;
         }
     }
+    
+    /**
+     * Retorna el tipo de imagen colocada en el juego
+     */
+    public int getTipo(){ return tipo; }
 }

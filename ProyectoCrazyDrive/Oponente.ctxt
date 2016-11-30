@@ -1,17 +1,18 @@
 #BlueJ class context
 comment0.target=Oponente
-comment0.text=\r\n\ \#Esta\ clase\ representa\ a\ un\ oponente\ del\ jugador\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Oponente\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=Oponente()
 comment1.text=\r\n\ \r\n
 comment2.params=
 comment2.target=void\ act()
-comment3.params=
-comment3.target=void\ avanza()
-comment4.params=sentido
-comment4.target=void\ gira(int)
-comment5.params=cant
-comment5.target=void\ aumentaVelocidad(int)
-comment6.params=cant
-comment6.target=void\ disminuyeVelocidad(int)
+comment3.params=sentido
+comment3.target=void\ gira(int)
+comment4.params=cant
+comment4.target=void\ cambiaVelocidad(int)
+comment5.params=
+comment5.target=int\ checkIfTouchObstaculo()
+comment6.params=
+comment6.target=int\ checkIfTouchBala()
+comment6.text=\r\n\ Comprueba\ si\ la\ bala\ lo\ ha\ tocado\r\n
 numComments=7

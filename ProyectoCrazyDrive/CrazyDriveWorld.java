@@ -1,189 +1,120 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.List;
-import java.util.ArrayList;
-import java.awt.Scrollbar;
-import greenfoot.Actor;
-import greenfoot.GreenfootImage;
-import java.util.Calendar;
-import java.awt.Color;
-import java.lang.Class;
-import java.util.LinkedList;
 
 /**
- * Esta es la clase mundo de nuestro juego (proyecto de la materia de programación orientada a objetos)
+ * Write a description of class CrazyDriveWorld here.
  * 
- * Todos los atributos son privados y todos los metodos publicos
- * 
- * 
- * @author Nava Torres Claudio Isauro, Bustos Hernandez Maricruz
- * @version 10/11/2016- Fue la fecha en que comenzamos a comentar nuestro codigo xD
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class CrazyDriveWorld extends World
 {
-    private int cx=-170;
-    private int cy=-3300;
-    private GreenfootImage pista =(new GreenfootImage("Pista1.png"));  //La imagen es un atributo de la clase
-    private static final int altura=500;
-    private static final int anchura=600;
-    private ScrollActor principal;
-    private Competidor oponente1;
-    private Salida puntoSalida;
+    private static final String bgImageName = "Pista3.png";
+    private double scrollSpeed = 0;
+    private static final int picHeight = (new GreenfootImage(bgImageName)).getHeight();
+    private GreenfootImage bgImage, bgBase;
+    private int scrollPosition =0;
+    private static final int altura=600;
+    private static final int anchura=800;
+    private Counter contTiempo=new Counter();
+    private int PistaLimiteIzquierdo=235;
+    private int PistaLimiteDerecho=545;
+    private Competidor principal;
+    private SimpleTimer reloj=new SimpleTimer();
     private Ready ready=new Ready();
     private Go go=new Go();
-    private Meta puntoMeta;
-    private SimpleTimer reloj=new SimpleTimer();
-    private Counter contTiempo=new Counter();
-    private Counter contArma=new Counter();
-    private Arma arma=new Arma();
-    private Obstaculo arbol=new ArbolCaido();
-    private Obstaculo mancha=new ManchadeAceite();
-    private Bonificador gas;
     private Imagen imgGas;
-    private Arma Bala=new BalaPrincipal();
+    private Counter contVueltas;
+    private Bonificador estrella;
+    private Counter contEstrellas;
+    private Obstaculo mancha;
+    private Obstaculo arbol;
+    private Obstaculo bache;
     private SimpleTimer tiempoBalaE=new SimpleTimer(); 
-    private LinkedList <GreenfootImage> botones;
-     private Boton Jugar,Ayuda,Salir;
+    private Competidor oponente;
     
-     
-     public void act()
-     { 
-         seleccionar();
-         
-      }
-   
     /**
-     * Este es el constructor de nuestra clase mundo 
-     * 
-     */
+    *
+    */
     public CrazyDriveWorld()
     {    
-        // Se crea el mundo con sus valores en ancho y alto, con celdas de un pixel
         super(anchura, altura, 1,false);
-        
-        botones= new LinkedList();
-        botones.add(new GreenfootImage("crazyDrive.png"));
-        botones.add(new GreenfootImage("Ayuda.png"));
-        botones.add(new GreenfootImage("Jugar.png"));
-        botones.add(new GreenfootImage("Salir.png"));
-        botones.add(new GreenfootImage("Pista1.png"));
-        
-        Jugar= new Boton(getBotones(2));
-        Ayuda= new Boton(getBotones(1));
-        Salir= new Boton(getBotones(3));
-        
-        menu();
-      
+        setBackground(bgImageName);
+        bgImage = new GreenfootImage(getBackground());
+        bgBase = new GreenfootImage(getWidth(), picHeight);
+        bgBase.drawImage(bgImage, 0, 0);
+        prepare();
     }
-    /**
-     * Este es el menú del juego
-     */
-    public void menu()
-    {
 
-        setBackground(getBotones(0));
-        addObject(Jugar, 220, 470);
-        //addObject(Salir, 400, 100);
-        addObject(Ayuda, 70, 430);  
-        Greenfoot.setSpeed(47);
+    public void act()
+    {
+        scrollPosition -= scrollSpeed;
+        while(scrollSpeed > 0 && scrollPosition < -picHeight) scrollPosition += picHeight;
+        while(scrollSpeed < 0 && scrollPosition > 0) scrollPosition -= picHeight;
+        paint(scrollPosition);
+        colocaEstrella();
+        colocaMancha();
+        seQuedoSinGas();
+        touchCompetidores();
+        meDisparo();
+    }
+
+    private void paint(int position)
+    {
+        GreenfootImage bg = getBackground();
+        bg.drawImage(bgBase,0,position);
+        bg.drawImage(bgImage,0,position + picHeight);
+    }
+
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    public void prepare()
+    {
+        principal= new JugadorPrincipal();      //Se crea y agrega a el competidor principal
+        addObject(principal,300,250);
+        imgGas=new ImagenGas();
+        addObject(imgGas,118,41);
+        contTiempo.setValue(3);
+        contVueltas= new Counter("Vueltas:");
+        addObject(contVueltas,700,41);
+        estrella=new Estrella();
+        contEstrellas = new Counter("Estrellas:");
+        addObject(contEstrellas,600,45);
+        mancha=new ManchaDeAceite();
+        oponente= new Oponente();
+        addObject(oponente,500,250);
+        
+        Greenfoot.playSound("export.mp3");
     }
     
-    public GreenfootImage getBotones(int n)
-    {
-        return botones.get(n);
-    }
-
     /**
      * Metodo para el arranque del jugador
      * @return contTiempo 
      */
-    public int iniciaCarrera(){        
-        
-        
-               
+    public int iniciaCarrera(){     
         if(reloj.millisElapsed()>1000){
             contTiempo.add(-1);
             reloj.mark();
-           
         }   
         if(contTiempo.getValue()==2){
-            addObject(ready,250,altura-400);          
+            addObject(ready,450,altura-400);          
         }
         if(contTiempo.getValue()==1){
             removeObject(ready);
-            addObject(go,250,altura-400);
-
+            addObject(go,450,altura-400);
         }
         if(contTiempo.getValue()==0){
             removeObject(go);
         }
-        
+    
         if(contTiempo.getValue()==-5){
             imgGas.cambiate(0);
         }
                 
         return contTiempo.getValue();
     }
-
-    public void eliminaArma(){ 
-        removeObject(arma);
-        contArma.setValue(+1);
-    }
-
-    public void eliminaArbol(){ 
-        removeObject(arbol);
-    }
     
-    public void eliminaMancha(){ 
-        removeObject(mancha);
-    }
-
-    /**
-     * Asigna una orientacion en la imagen de fondo del mundo 
-     */
-    public void setOrientacion(int oX, int oY)
-    {
-        cx=cx+oX;
-        cy=cy+oY;
-        getBackground().drawImage(pista,cx,cy);   //redibuja el fondo en las nuevas coordenadas recibidas por parametro
-    }
-
-    /**
-     * @return X
-     */
-    public int getcX(){ return cx; }
-
-    /**
-     * @return Y
-     */
-    public int getcY(){ return cy; }
-
-    /**
-     * @param cx Recibe un nuevo valor de cx
-     */
-    public void setcX(int x){ cx=x; } 
-
-    /**
-     * @param cy Recibe un nuevo valor de cy
-     */
-    public void setcY(int y){ cy=y; }
-
-    /**
-     * Método para agregar el objeto gas en una posición en X aleatoriamente
-     */
-    public void agregaGas()
-    {
-        gas=new Gas();
-        addObject(gas,Greenfoot.getRandomNumber(400),-1700);   
-    }
-
-    /**
-     * Este método elimina el objeto gas creado anteriormente
-     */
-    public void eliminaGas()
-    {  
-        removeObject(gas);
-    }
-
     /**
      * Este metodo disminuye la cantidad de gas disponible cada 3 segundos
      *Y si la cantidad de gas es cero, el juego se termina
@@ -192,14 +123,106 @@ public class CrazyDriveWorld extends World
     {
         imgGas.cambiate(i);
     }
-
+    
     /**
-     * Este método crea una bala y hace que la bala avance
+     * Modifica la cantidad de avance del scroll
      */
-    public void DisparaBala()
+    public void setScrollSpeed(double cant){ scrollSpeed=cant;  }
+    
+    /**
+     * Retorna el limite izquierdo de la pista
+     */
+    public int getPistaLimitIzquierdo(){ return PistaLimiteIzquierdo; }
+    
+    /**
+     * Retorna el limite derecho de la pista
+     */
+    public int getPistaLimitDerecho(){ return PistaLimiteDerecho; }
+    
+    /**
+     * Retorna la posicion del scroll
+     */
+    public int getScrollPosition(){ return scrollPosition; }
+    
+    /**
+     * Cuenta el numero de vueltas que ha dado el jugador sobre la pista
+     */
+    public void cuentaNumVueltas()
     {
-        Bala.setLocation(principal.getX(),principal.getY()-100);
-        addObject(Bala,principal.getX(),principal.getY()-100);
+        if(scrollPosition<=-3543)
+        {
+            contVueltas.add(1);
+        }
+    }
+    
+    /**
+     * Este método coloca a la estrella de una manera aleatoria dentro del juego
+     */
+    public void colocaEstrella()
+    {
+            if(scrollPosition>=-400 && scrollSpeed!=0)
+            {
+                addObject(estrella,400,400);
+                estrella.setLocation(estrella.getX(),estrella.getY()-4);
+                if(principal.checkIfTouchEstrella()!=0){
+                    contEstrellas.add(1);
+                    estrella.setLocation(400,0);
+                }
+            }
+            else{
+                removeObject(estrella);
+            }
+    }
+    
+    /**
+     * Checa si el jugador tiene las tres estrellas y las tres vueltas en la pista para ser ganador
+     */
+    public void ganador()
+    {
+        if(contEstrellas.getValue()>=3 && contVueltas.getValue()>=3 && principal.getY()>oponente.getY())
+        {
+            Label etiqueta=new Label("Winner",120);
+            addObject(etiqueta,principal.getX()+40,principal.getY()+50);
+            Greenfoot.stop();
+        }
+        else if((contEstrellas.getValue()>=3 && contVueltas.getValue()>=3 && principal.getY()<oponente.getY()) || (contEstrellas.getValue()<=3 && contVueltas.getValue()>=3))
+        {
+            Label etiqueta= new Label("Game Over",120);
+            addObject(etiqueta,principal.getX()+40,principal.getY()+50);
+            Greenfoot.stop();
+        }
+    }
+    
+    /**
+    * Coloca un obstaculo en el juego
+    */
+    public void colocaMancha()
+    {
+        if(scrollPosition<=-800 && scrollSpeed!=0)
+            {
+                addObject(mancha,Greenfoot.getRandomNumber(600),500);
+                mancha.setLocation(mancha.getX(),mancha.getY()-4);
+                if(principal.checkIfTouchObstaculo()!=0){
+                    oponente.cambiaVelocidad(1);
+                    mancha.setLocation(400,0);
+                }
+            }
+            else{
+                removeObject(mancha);
+            }
+        }
+    
+    /**
+     * Checa si el jugador se quedo sin gas
+     */
+    public void seQuedoSinGas()
+    {
+        if(imgGas.getTipo()==0)
+        {
+          Label etiqueta= new Label("Sin Gas",120);
+          addObject(etiqueta,principal.getX()+40,principal.getY()+50);
+          Greenfoot.stop();
+        }
     }
     
     /**
@@ -208,220 +231,55 @@ public class CrazyDriveWorld extends World
     public void DisparaBalaEnemigo()
     {  
               if(tiempoBalaE.millisElapsed()> 6000)
-               {
-                   Arma balaO= new balaOponente();
-                   addObject(balaO,oponente1.getX(),oponente1.getY());
+              {
+                   Arma balaO= new BalaOponente();
+                   addObject(balaO,oponente.getX(),oponente.getY());
+                   balaO.act();
                    tiempoBalaE.mark();
                }
     }
-            
-    public void ganador()
+    
+    /**
+     * Este metodo permite que la bala salga disparada
+     */
+    public void disparaBala()
     {
-            Label etiqueta=new Label("Winner",120);
-            addObject(etiqueta,principal.getX()+40,principal.getY()+50);
+        Arma bala= new BalaPrincipal();
+        addObject(bala,principal.getX(),principal.getY());
+        bala.act();
     }
     
     /**
-     * Este es un método de seleccion del menú para jugar o pedir ayuda
+     * Cambia las posiciones de los jugadores si se tocan
      */
-    public void seleccionar()
+    public void touchCompetidores()
     {
         
-        if(Greenfoot.mouseClicked(Salir)) {
-            removeObjects(getObjects(null));
-            menu();
-        }
-        
-        if(Greenfoot.mouseClicked(Jugar)) {
-            removeObjects(getObjects(null));            
-             Nivel1();
-             
-        }
-        
-         if(Greenfoot.mouseClicked(Ayuda)) {
-            removeObjects(getObjects(null));
-   
+        if(principal.checaSiChoco()==1)
+        {
+            principal.setLocation(300,250);
+            oponente.setLocation(500,oponente.getY());
         }
     }
+    
     /**
-     * Este es un método donde se crea todo nuestro escenario
+     * Si la bala te toca te vuelve más lento
      */
-    public void Nivel1()
+    public void meDisparo()
     {
-        setBackground(getBotones(4));
-        principal=new JugadorPrincipal();   //se crea un jugador de tipo principal    
-        addObject(principal,270,400);       //se agrega el jugador principal en el mundo
-        oponente1=new Oponente();
-        addObject(oponente1,150,400);
-        addObject(arma,200,100);
-        puntoSalida=new Salida();
-        addObject(puntoSalida,220,620);
-        puntoMeta=new Meta();
-        addObject(puntoMeta,220,-3100);
-        contTiempo.setValue(3);
-        addObject(arbol,271,19);
-        addObject(mancha,271,-1000);
-        agregaGas();
-        imgGas=new ImagenGas();
-        addObject(imgGas,118,41);
+        if(principal.checkIfTouchBala()!=0)
+        {
+            oponente.setLocation(oponente.getX(),oponente.getY()+50);
+        }
+        if(oponente.checkIfTouchBala()!=0)
+        {
+            oponente.cambiaVelocidad(-1);
+        }
+        if(oponente.getY()>=altura)
+        {
+            Label etiqueta= new Label("Game Over",120);
+            addObject(etiqueta,principal.getX()+40,principal.getY()+50);
+            Greenfoot.stop();
+        }
     }
 }
-    
-   /* /**
-    }}
-  
-    /*
-    /**
-     * Metodo para el arranque del jugador
-     * @return contTiempo 
-     */
- /*       public int iniciaCarrera(){        
-      
-       if(reloj.millisElapsed()>1000){
-        contTiempo.add(-1);
-        reloj.mark();
-       }   
-       if(contTiempo.getValue()==2){
-         addObject(ready,250,altura-500);          
-       }
-        if(contTiempo.getValue()==1){
-          removeObject(ready);
-          addObject(go,250,altura-500);
-       }
-       if(contTiempo.getValue()<0){
-         removeObject(go);
-       }
-        return contTiempo.getValue();
-    }
-    
-     public void eliminaArma(){ 
-         removeObject(arma);
-         contArma.setValue(+1);
-        }
-    
-    /**
-     * Asigna una orientacion en la imagen de fondo del mundo 
-     */
- /*   public void setOrientacion(int oX, int oY)
-    {
-        cx=cx+oX;
-        cy=cy+oY;
-        getBackground().drawImage(pista,cx,cy);   //redibuja el fondo en las nuevas coordenadas recibidas por parametro
-    }
-    
-    /**
-     * @return X
-     */
- /*   public int getcX(){ return cx; }
-    
-    /**
-     * @return Y
-     */
- /*   public int getcY(){ return cy; }
-    
-    /**
-     * @param cx Recibe un nuevo valor de cx
-     */
-  /*  public void setcX(int x){ cx=x; }
-    
-    /**
-     * @param cy Recibe un nuevo valor de cy
-     */
-  /*  public void setcY(int y){ cy=y; }
-    
-    /**
-     * Este metodo nos permite eliminar el objeto gas colocado en la pantalla
-     */
-  /*  public void eliminaGas()
-    {  
-        removeObject(gas);
-    }
- }
-
-/*public class CrazyDriveWorld extends World
-{
-   
-    /*Atributos para la pantalla*/
-   /* private static final int WIDTH = 560;
-    private static final int HEIGHT = 850;
-    private int limiteIzquierdoPista=130;
-    private int limiteDerechoPista=322;
-    
-    /*Atributos del juego*/
-    /*private JugadorPrincipal jugador;
-    private Estrella estrella;
-    private Counter contEstrellas;
-    private Counter contTiempo;
-    private SimpleTimer reloj=new SimpleTimer();
-    private Gas gas;
-    private Nitrox nitrox;
-    private Agujero agujero;
-    private int i=0; //este atributo no debe pertenecer a la clase Ojo mari
-    
-
-    /**
-     * Constructor for objects of class CrazyDriveWorld.
-     * 
-     */
-    /*public CrazyDriveWorld()
-    {    
-        super( WIDTH, HEIGHT, 1); 
-        prepare();
-        //contTiempo.setValue(3);
-
-     
-    }
-    
-    
-   /*     /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
-    /*public void prepare()
-    {
-        jugador = new JugadorPrincipal();
-        addObject(jugador,206,805);
-        jugador.setLocation(198,805);
-        estrella = new Estrella();
-        addObject(estrella,257,258);
-        estrella.setLocation(253,255);
-        contEstrellas = new Counter("Estrellas: ");
-        addObject(contEstrellas,416,162);
-        contTiempo = new Counter("Tiempo: ");
-        addObject(contTiempo,416,200);
-        gas = new Gas();
-        addObject(gas,145,397);   
-        gas.setLocation(150,400);
-        nitrox = new Nitrox();
-        addObject(nitrox,300,600);
-        nitrox.setLocation(310,610);
-        agujero = new  Agujero();
-        addObject(agujero,120,600);
-        agujero.setLocation(130,610);
-    }
-    
-    public void eliminaEstrella()
-    {
-        removeObject(estrella);
-        incrementaContEstrellas();
-    }
-    
-    public void eliminaNitrox()
-    {  
-        removeObject(nitrox);
-    }
-    
-     public void eliminaAgujero()
-    {  
-        removeObject(agujero);
-    }
-    
-    public void incrementaContEstrellas()
-    {
-        contEstrellas.setValue(+1);
-    }
-    
-    //public int getLimitIzqPi(){ return limiteIzquierdoPista; }
-      
-    //public int getLimitDerPi(){ return limiteDerechoPista; }
-    */
