@@ -16,7 +16,7 @@ public class Menu extends World
     public Menu()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 500, 1); 
+        super(800, 600, 1); 
         prepare();
     }
 
@@ -33,5 +33,10 @@ public class Menu extends World
         addObject(jugar,225,480);
         jugar.setLocation(211,473);
         Greenfoot.playSound("Inicio.mp3");
+        ayuda.setLocation(57,494);
+        jugar.setLocation(279,565);
+        Credito credito = new Credito();
+        addObject(credito,215,417);
+        credito.setLocation(641,263);
     }
 }

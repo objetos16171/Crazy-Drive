@@ -11,14 +11,14 @@ public class Helph extends World
     private Botton volver;
     
     /**
-     * Constructor for objects of class Helph.
+     * Constructor for objects of class Help.
      * 
      */
     public Helph()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 500, 1);
+        super(800, 600, 1);
         volver=new Back();
-        addObject(volver,550,450);
+        addObject(volver,700,550);
     }
 }
