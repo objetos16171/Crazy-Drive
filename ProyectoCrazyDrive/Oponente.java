@@ -36,11 +36,14 @@ public class Oponente extends Competidor
     
     public void cambiaVelocidad(int cant)
     {
-        if(cant==1)
+        CrazyDriveWorld mundo =(CrazyDriveWorld)getWorld();
+        
+        if(cant==1 && this.getX()>mundo.getPistaLimitIzquierdo())
         {
             setLocation(getX()-150,getY()+230);  
         }
-        if(cant==-1)
+        
+        if(cant==-1&& this.getX()<mundo.getPistaLimitDerecho())
         {
             setLocation(getX()+150,getY()-230);
         }

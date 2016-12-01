@@ -54,8 +54,10 @@ public class CrazyDriveWorld extends World
         colocaEstrella();
         colocaMancha();
         seQuedoSinGas();
+        colocaBache();
         touchCompetidores();
         meDisparo();
+        colocaArbol();
     }
 
     private void paint(int position)
@@ -84,6 +86,8 @@ public class CrazyDriveWorld extends World
         mancha=new ManchaDeAceite();
         oponente= new Oponente();
         addObject(oponente,500,250);
+        arbol= new ArbolCaido();
+        bache= new Bache();
         
         Greenfoot.playSound("export.mp3");
     }
@@ -200,7 +204,7 @@ public class CrazyDriveWorld extends World
     {
         if(scrollPosition<=-800 && scrollSpeed!=0)
             {
-                addObject(mancha,Greenfoot.getRandomNumber(600),500);
+                addObject(mancha,Greenfoot.getRandomNumber(600),600);
                 mancha.setLocation(mancha.getX(),mancha.getY()-4);
                 if(principal.checkIfTouchObstaculo()!=0){
                     oponente.cambiaVelocidad(1);
@@ -282,4 +286,42 @@ public class CrazyDriveWorld extends World
             Greenfoot.stop();
         }
     }
+    
+    /**
+    * Coloca un obstaculo en el juego
+    */
+    public void colocaArbol()
+    {
+        if(scrollPosition<=-1800 && scrollSpeed!=0)
+            {
+                addObject(arbol,Greenfoot.getRandomNumber(600),700);
+                arbol.setLocation(arbol.getX(),arbol.getY()-4);
+                if(principal.checkIfTouchObstaculo()!=0){
+                    oponente.cambiaVelocidad(1);
+                    arbol.setLocation(400,0);
+                }
+            }
+            else{
+                removeObject(arbol);
+            }
+        }
+        
+    /**
+    * Coloca un obstaculo en el juego
+    */
+    public void colocaBache()
+    {
+        if(scrollPosition<=-1000 && scrollSpeed!=0)
+            {
+                addObject(bache,Greenfoot.getRandomNumber(600),700);
+                bache.setLocation(bache.getX(),bache.getY()-4);
+                if(principal.checkIfTouchObstaculo()!=0){
+                    oponente.cambiaVelocidad(1);
+                    bache.setLocation(400,0);
+                }
+            }
+            else{
+                removeObject(bache);
+            }
+        }
 }
