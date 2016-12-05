@@ -88,9 +88,12 @@ public class CrazyDriveWorld extends World
         addObject(oponente,500,250);
         arbol= new ArbolCaido();
         bache= new Bache();
-        
         Greenfoot.playSound("export.mp3");
-    }
+        Botton menu= new BMenu();
+        addObject(menu,700,550); 
+        Botton volverJ= new VolveraJugar();
+        addObject(volverJ,700,500); 
+            }
     
     /**
      * Metodo para el arranque del jugador
@@ -193,11 +196,11 @@ public class CrazyDriveWorld extends World
         {
             Label etiqueta= new Label("Game Over",120);
             addObject(etiqueta,principal.getX()+40,principal.getY()+50);
-            Greenfoot.stop();
+             Greenfoot.stop();
         }
     }
     
-    /**
+    /** 
     * Coloca un obstaculo en el juego
     */
     public void colocaMancha()

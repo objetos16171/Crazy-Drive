@@ -39,6 +39,8 @@ public class JugadorPrincipal extends Competidor
     public void avanza()
     {
         CrazyDriveWorld mundo =(CrazyDriveWorld)getWorld();
+         if(Greenfoot.isKeyDown("Up")){velocidad ++;}
+         else{velocidad=3;}
         mundo.setScrollSpeed(velocidad);
         if(Greenfoot.isKeyDown("Right")&& this.getX()<mundo.getPistaLimitDerecho()){
             gira(cantGiro);
